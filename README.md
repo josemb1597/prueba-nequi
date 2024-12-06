@@ -1,105 +1,80 @@
-# Guía para Ejecutar un Proyecto con Spring Boot, MySQL y Gradle
+# Mi Proyecto 
+
+**Descripción:**
+Este es un proyecto es creado con Spring Boot.
+
+## Cómo usarlo:
+
+1. **Clona el repositorio:**
+    ```bash
+    git clone https://github.com/josemb1597/prueba-nequi.git
+    ```
+2. **Configura la base de datos:**
+
+   Antes de ejecutar la aplicación, es necesario configurar la base de datos y las tablas. Para hacerlo, sigue estos pasos:
+
+   - Abre tu cliente gráfico de MySQL (por ejemplo, MySQL Workbench) y conéctate a tu servidor MySQL.
+   - Abre el archivo `.sql` que contiene el script de creación de la base de datos y las tablas. Este archivo se encuentra en el repositorio.
+   - En MySQL Workbench, selecciona **File > Open SQL Script** y elige el archivo correspondiente.
+   - Ejecuta el script para crear la base de datos y las tablas necesarias.
+
+3. **Instala las dependencias:**
+    ```bash
+    gradle build
+    ```
+
+4. **Ejecuta la aplicación:**
+    ```bash
+    gradle bootRun
+    ```
+
+## Estructura del proyecto:
+
+| Carpeta               | Descripción              |
+|---------------------- |--------------------------|
+| `src/main/java`       | Código fuente principal  |
+| `src/test/java`       | Pruebas unitarias        |
 
 ## 1. Requisitos Previos
-
 Asegúrate de tener los siguientes requisitos instalados:
 
-- **Java Development Kit (JDK 8 o superior):**
-  Verifica la instalación con el siguiente comando:
-  ```bash
-  java -version
-MySQL: Verifica la instalación con:
+- **Java Development Kit (JDK 17 o superior):**
+    - Verifica la instalación con el siguiente comando:
+        ```bash
+        java -version
+        ```
 
-bash
-mysql --version
-Gradle: Verifica que Gradle esté instalado con:
+- **MySQL:**
+    - Verifica la instalación con:
+        ```bash
+        mysql --version
+        ```
 
-bash
-gradle -v
-IDE (como IntelliJ IDEA, Eclipse o VSCode).
+- **Gradle:**
+    - Verifica que Gradle esté instalado con:
+        ```bash
+        gradle -v
+        ```
 
-2. Clonar el Repositorio (si es necesario)
-Si tu proyecto está en un repositorio remoto, clónalo usando Git:
+- **IDE (como IntelliJ IDEA, Eclipse o VSCode).**
 
-bash
-Copiar código
-git clone <URL_DEL_REPOSITORIO>
-cd <NOMBRE_DEL_REPOSITORIO>
+# Configuración de la Base de Datos MySQL y Proyecto
 
-3. Configurar la Base de Datos MySQL
-Si no has creado aún la base de datos y las tablas, sigue estos pasos:
 
-Inicia sesión en MySQL:
+Antes de continuar con la configuración de la aplicación, debes crear la base de datos y las tablas en MySQL. El script para hacerlo ya se encuentra en el repositorio.
 
-bash
-mysql -u root -p
-Crear la base de datos:
+Sigue estos pasos:
 
-sql
-CREATE DATABASE <NOMBRE_DE_LA_BASE_DE_DATOS>;
-USE <NOMBRE_DE_LA_BASE_DE_DATOS>;
-Crear las tablas necesarias para el proyecto. Aquí hay un ejemplo genérico de cómo puedes hacerlo:
+1. **Abrir tu Cliente de MySQL (por ejemplo, MySQL Workbench):**
 
-sql
-CREATE TABLE <NOMBRE_DE_LA_TABLA> (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nombre_columna_1 VARCHAR(100) NOT NULL,
-    nombre_columna_2 INT NOT NULL
-);
+   Abre MySQL Workbench o cualquier otro cliente gráfico de tu elección y conéctate a tu servidor MySQL.
 
-4. Configurar el archivo application.yml (o application.properties)
-Configura el archivo de propiedades de la aplicación con los detalles de conexión a la base de datos. A continuación se muestra un ejemplo utilizando application.yml:
+2. **Ejecutar el script:**
 
-yaml
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/<NOMBRE_DE_LA_BASE_DE_DATOS>
-    username: root
-    password: <TU_CONTRASEÑA>
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    open-in-view: false
-server:
-  port: 8080
-  
-Conexión a la base de datos: Se conecta a MySQL en localhost usando la base de datos configurada.
-JPA: Se configura Hibernate para actualizar automáticamente el esquema de la base de datos.
-Puerto: La aplicación se ejecutará en el puerto 8080.
+   - Abre el archivo `.sql` que contiene el script de creación de la base de datos y las tablas. Este archivo se encuentra en el repositorio.
+   - En MySQL Workbench, puedes hacerlo desde el menú **File > Open SQL Script** y seleccionar el archivo del script.
+   - Una vez abierto el script, ejecuta el código en el cliente gráfico.
 
-5. Configurar las Dependencias de Gradle
-El archivo build.gradle debe tener las dependencias necesarias para tu proyecto. Aquí hay un ejemplo común de las dependencias que podrías necesitar:
+   Esto creará la base de datos y las tablas necesarias para tu aplicación.
 
-gradle
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    runtimeOnly 'com.mysql:mysql-connector-j'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-Estas dependencias incluyen soporte para Spring Data JPA, Spring Web y el conector MySQL.
-
-6. Instalar Dependencias de Gradle
-Ejecuta el siguiente comando para instalar todas las dependencias del proyecto:
-
-bash
-gradle build
-Este comando descargará todas las dependencias necesarias para el proyecto.
-
-7. Ejecutar el Proyecto
-Una vez que las dependencias estén instaladas, puedes ejecutar la aplicación de Spring Boot.
-
-Si estás usando Gradle, ejecuta el siguiente comando:
-
-bash
-gradle bootRun
-Si usas un IDE como IntelliJ IDEA, puedes ejecutar el proyecto directamente desde el IDE.
-
-8. Verificar la Ejecución
-Abre tu navegador y verifica si la aplicación está funcionando correctamente. Por defecto, la aplicación se ejecuta en el puerto 8080, por lo que puedes acceder a:
-
-bash
-http://localhost:8080
-Si todo está configurado correctamente, deberías ver la respuesta de tu aplicación.
+Este paso configurará automáticamente tu base de datos y las tablas necesarias para que la aplicación funcione correctamente.
