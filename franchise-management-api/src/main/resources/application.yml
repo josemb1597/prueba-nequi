@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: franchise-management-api
+  datasource:
+    url: jdbc:mysql://localhost:3306/franchise_management
+    username: root
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+server:
+  port: 8080
