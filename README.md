@@ -1,8 +1,8 @@
-# Guía para Ejecutar el Proyecto con Spring Boot, MySQL y Gradle
+# Guía para Ejecutar un Proyecto con Spring Boot, MySQL y Gradle
 
 ## 1. Requisitos Previos
 
-Asegúrate de tener lo siguiente instalado:
+Asegúrate de tener los siguientes requisitos instalados:
 
 - **Java Development Kit (JDK 8 o superior):**
   Verifica la instalación con el siguiente comando:
@@ -11,12 +11,10 @@ Asegúrate de tener lo siguiente instalado:
 MySQL: Verifica la instalación con:
 
 bash
-Copiar código
 mysql --version
 Gradle: Verifica que Gradle esté instalado con:
 
 bash
-Copiar código
 gradle -v
 IDE (como IntelliJ IDEA, Eclipse o VSCode).
 
@@ -25,57 +23,39 @@ Si tu proyecto está en un repositorio remoto, clónalo usando Git:
 
 bash
 Copiar código
-git clone https://github.com/josemb1597/prueba-nequi.git
-cd prueba-nequi
+git clone <URL_DEL_REPOSITORIO>
+cd <NOMBRE_DEL_REPOSITORIO>
+
 3. Configurar la Base de Datos MySQL
 Si no has creado aún la base de datos y las tablas, sigue estos pasos:
 
 Inicia sesión en MySQL:
 
 bash
-Copiar código
 mysql -u root -p
 Crear la base de datos:
 
 sql
-Copiar código
-CREATE DATABASE franchise_management;
-USE franchise_management;
-Crear las tablas:
+CREATE DATABASE <NOMBRE_DE_LA_BASE_DE_DATOS>;
+USE <NOMBRE_DE_LA_BASE_DE_DATOS>;
+Crear las tablas necesarias para el proyecto. Aquí hay un ejemplo genérico de cómo puedes hacerlo:
 
 sql
-Copiar código
-CREATE TABLE franchises (
+CREATE TABLE <NOMBRE_DE_LA_TABLA> (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name_franchise VARCHAR(100) NOT NULL UNIQUE
+    nombre_columna_1 VARCHAR(100) NOT NULL,
+    nombre_columna_2 INT NOT NULL
 );
 
-CREATE TABLE branches (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name_branch VARCHAR(100) NOT NULL,
-    franchise_id BIGINT NOT NULL,
-    CONSTRAINT fk_branches_franchises FOREIGN KEY (franchise_id) REFERENCES franchises(id) ON DELETE CASCADE
-);
-
-CREATE TABLE products (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name_product VARCHAR(100) NOT NULL,
-    stock INT UNSIGNED NOT NULL DEFAULT 0,
-    branch_id BIGINT NOT NULL,
-    CONSTRAINT fk_products_branches FOREIGN KEY (branch_id) REFERENCES branches(id) ON DELETE CASCADE
-);
-4. Configurar el archivo application.yml
-Ya tienes un archivo application.yml configurado con la conexión a MySQL. Aquí te dejo el ejemplo:
+4. Configurar el archivo application.yml (o application.properties)
+Configura el archivo de propiedades de la aplicación con los detalles de conexión a la base de datos. A continuación se muestra un ejemplo utilizando application.yml:
 
 yaml
-Copiar código
 spring:
-  application:
-    name: franchise-management-api
   datasource:
-    url: jdbc:mysql://localhost:3306/franchise_management
+    url: jdbc:mysql://localhost:3306/<NOMBRE_DE_LA_BASE_DE_DATOS>
     username: root
-    password: admin
+    password: <TU_CONTRASEÑA>
   jpa:
     hibernate:
       ddl-auto: update
@@ -83,41 +63,37 @@ spring:
     open-in-view: false
 server:
   port: 8080
-Conexión a la base de datos: Se conecta a MySQL en localhost usando la base de datos franchise_management.
-JPA: Se configura Hibernate para actualizar el esquema de la base de datos automáticamente y mostrar las consultas SQL en la consola.
+  
+Conexión a la base de datos: Se conecta a MySQL en localhost usando la base de datos configurada.
+JPA: Se configura Hibernate para actualizar automáticamente el esquema de la base de datos.
 Puerto: La aplicación se ejecutará en el puerto 8080.
+
 5. Configurar las Dependencias de Gradle
-Tu archivo build.gradle ya tiene las dependencias necesarias. Aquí te explico qué hace cada una:
+El archivo build.gradle debe tener las dependencias necesarias para tu proyecto. Aquí hay un ejemplo común de las dependencias que podrías necesitar:
 
 gradle
-Copiar código
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.mapstruct:mapstruct:1.6.3'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'
-    annotationProcessor 'org.projectlombok:lombok'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
+
+Estas dependencias incluyen soporte para Spring Data JPA, Spring Web y el conector MySQL.
+
 6. Instalar Dependencias de Gradle
-Ejecuta el siguiente comando para instalar las dependencias del proyecto:
+Ejecuta el siguiente comando para instalar todas las dependencias del proyecto:
 
 bash
-Copiar código
 gradle build
-Este comando descargará todas las dependencias necesarias.
+Este comando descargará todas las dependencias necesarias para el proyecto.
 
 7. Ejecutar el Proyecto
 Una vez que las dependencias estén instaladas, puedes ejecutar la aplicación de Spring Boot.
 
-Si estás usando Gradle, ejecuta:
+Si estás usando Gradle, ejecuta el siguiente comando:
 
 bash
-Copiar código
 gradle bootRun
 Si usas un IDE como IntelliJ IDEA, puedes ejecutar el proyecto directamente desde el IDE.
 
@@ -125,17 +101,5 @@ Si usas un IDE como IntelliJ IDEA, puedes ejecutar el proyecto directamente desd
 Abre tu navegador y verifica si la aplicación está funcionando correctamente. Por defecto, la aplicación se ejecuta en el puerto 8080, por lo que puedes acceder a:
 
 bash
-Copiar código
 http://localhost:8080
-Si todo está configurado correctamente, deberías ver la respuesta de tu aplicación Spring Boot (dependiendo de las rutas que hayas definido).
-
-9. Probar Operaciones CRUD
-Si has implementado controladores para gestionar franquicias, sucursales y productos, puedes realizar peticiones HTTP para probar la funcionalidad de tu aplicación:
-
-GET /franchises: Obtener la lista de franquicias.
-POST /franchises: Crear una nueva franquicia.
-GET /branches: Obtener la lista de sucursales.
-POST /branches: Crear una nueva sucursal.
-GET /products: Obtener la lista de productos.
-POST /products: Crear un nuevo producto.
-Puedes usar herramientas como Postman o cURL para realizar estas peticiones.
+Si todo está configurado correctamente, deberías ver la respuesta de tu aplicación.
