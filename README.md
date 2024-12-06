@@ -50,11 +50,6 @@ Asegúrate de tener los siguientes requisitos instalados:
         mysql --version
         ```
 
-- **Gradle:**
-    - Verifica que Gradle esté instalado con:
-        ```bash
-        gradle -v
-        ```
 
 - **IDE (como IntelliJ IDEA, Eclipse o VSCode).**
 
